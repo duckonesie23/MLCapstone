@@ -3,14 +3,20 @@ from stable_baselines3 import PPO
 import os
 import matplotlib.pyplot as plt
 
-env = gym.make("CartPole-v1", render_mode="human")
+#cartpole
+#CartPole-v1, LunarLander-v3, Pendulum-v1
 
-if os.path.exists("ppo_cartpoleB.zip"):
+modelStr = "pong"
+environmentStr = "Pong-v4"
+
+env = gym.make(environmentStr, render_mode="human")
+
+if os.path.exists(f"ppo_{modelStr}.zip"):
     print("loading")
-    model = PPO.load("ppo_cartpoleB",env=env)
+    model = PPO.load(f"ppo_{modelStr}",env=env)
 else:
     print("training")
-    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./ppo_cartpoleB_tensorboard/")
+    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./ppo_cartpole_tensorboard/")
 
 model.learn(total_timesteps=10000)
 
@@ -29,7 +35,7 @@ for _ in range (1000):
         total_reward = 0
         obs, _ = env.reset()
 env.close()
-model.save("ppo_cartpoleB")
+model.save(f"ppo_{modelStr}")
 
 plt.plot(episode_rewards)
 plt.xlabel("Episode")
