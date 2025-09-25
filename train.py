@@ -48,11 +48,11 @@ model = make_model(env)
 train_model(model,env,1000)
 model.save(f"logs/ppo_{environmentStr.lower()}.zip")
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     # This only runs if the script is executed directly
     env = make_env(environmentStr)
     model = make_model(env)
     train_model(model, env, 2000)
     model.save(f"logs/ppo_{environmentStr.lower()}.zip")
-
+'''
 
