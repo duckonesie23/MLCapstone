@@ -3,9 +3,9 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import CheckpointCallback
 import os
 
-environments = ["CartPole-v1","MountainCar-v0","LunarLander-v3","BipedalWalker-v3"]
+environments = ["CartPole-v1","MountainCar-v0","LunarLander-v3","BipedalWalker-v3","CarRacing-v3"]
 
-environmentStr = environments[3]
+environmentStr = environments[4]
 checkpoint_callback=CheckpointCallback(
             save_freq=1000,
             save_path="./logs/",
@@ -13,7 +13,7 @@ checkpoint_callback=CheckpointCallback(
         )  
 
 def make_env(env_id: str):
-    return gym.make(env_id, render_mode="human")
+    return gym.make(env_id, render_mode="none")
     
 def make_model(env):
     if os.path.exists(f"logs/ppo_{environmentStr.lower()}.zip"):
@@ -45,7 +45,7 @@ def train_model(model,env,timesteps: int,render=True):
 
 env=make_env(environmentStr)
 model = make_model(env)
-train_model(model,env,1000)
+train_model(model,env,500000)
 model.save(f"logs/ppo_{environmentStr.lower()}.zip")
 
 '''if __name__ == "__main__":
